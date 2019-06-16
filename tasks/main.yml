@@ -1,0 +1,19 @@
+---
+# tasks file for docker
+
+- name: Install Docker
+  package: name=docker
+
+- name: Install docker-py
+  # Just installing python-docker-py using dnf leads to problems on some Fedora Server versions, so we use PIP.
+  pip:
+    name:
+      - requests
+      - docker-py
+    #state: latest
+
+- name: Start and enable Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: True
